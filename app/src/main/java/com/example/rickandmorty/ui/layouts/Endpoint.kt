@@ -1,6 +1,7 @@
 package com.example.rickandmorty.ui.layouts
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -10,14 +11,23 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.rickandmorty.viewmodel.CharacterViewModel
 
 @Composable
-fun Endpoint(navController: NavController, endpointType: String) {
+fun Endpoint(
+    navController: NavController, characterViewModel: CharacterViewModel, endpointType: String
+) {
+    LaunchedEffect(Unit, block = {
+        characterViewModel.getCharacterResponse()
+    })
+
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {
@@ -42,8 +52,30 @@ fun Endpoint(navController: NavController, endpointType: String) {
             .fillMaxWidth()
             .padding(WindowInsets.statusBars.asPaddingValues())
         )
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            Text(text = "I am the Endpoint screen for: $endpointType")
+
+        if (characterViewModel.errorMessage.isNotEmpty()) {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                Text(text = characterViewModel.errorMessage)
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        start = 0.dp,
+                        end = 0.dp,
+                        top = WindowInsets.statusBars
+                            .asPaddingValues()
+                            .calculateTopPadding() + 56.dp,
+                        bottom = 0.dp
+                    )
+            ) {
+                characterViewModel.characterResponse.value.results.forEach { character ->
+                    item {
+                        Text(text = character.name)
+                    }
+                }
+            }
         }
     }
 }
