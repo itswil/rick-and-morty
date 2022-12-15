@@ -89,7 +89,6 @@ fun Endpoint(
                         }
                     }
                     "locations" -> {
-                        println(endpointViewModel.locationResponse.value)
                         items(endpointViewModel.locationResponse.value.results) { location ->
                             Text(text = location.name)
                         }
