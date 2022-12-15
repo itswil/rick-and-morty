@@ -8,12 +8,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.rickandmorty.ui.layouts.Endpoint
 import com.example.rickandmorty.ui.layouts.Home
-import com.example.rickandmorty.viewmodel.CharacterViewModel
+import com.example.rickandmorty.viewmodel.EndpointViewModel
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    val characterViewModel = CharacterViewModel()
+    val endpointViewModel = EndpointViewModel()
 
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
         composable(route = Screen.HomeScreen.route) {
@@ -25,7 +25,7 @@ fun Navigation() {
                 type = NavType.StringType
             })
         ) { backStackEntry ->
-            backStackEntry.arguments?.getString("endpointType")?.let { Endpoint(navController, characterViewModel, it) }
+            backStackEntry.arguments?.getString("endpointType")?.let { Endpoint(navController, endpointViewModel, it) }
         }
     }
 

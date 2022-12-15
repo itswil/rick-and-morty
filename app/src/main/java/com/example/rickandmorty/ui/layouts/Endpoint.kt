@@ -2,6 +2,7 @@ package com.example.rickandmorty.ui.layouts
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -18,14 +19,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.rickandmorty.viewmodel.CharacterViewModel
+import com.example.rickandmorty.viewmodel.EndpointViewModel
 
 @Composable
 fun Endpoint(
-    navController: NavController, characterViewModel: CharacterViewModel, endpointType: String
+    navController: NavController, endpointViewModel: EndpointViewModel, endpointType: String
 ) {
     LaunchedEffect(Unit, block = {
-        characterViewModel.getCharacterResponse()
+        when (endpointType) {
+            "characters" -> {
+                endpointViewModel.getCharacterResponse()
+            }
+            "locations" -> {
+                endpointViewModel.getLocationResponse()
+            }
+            "episodes" -> {
+                endpointViewModel.getEpisodeResponse()
+            }
+        }
     })
 
     Surface(
@@ -53,9 +64,9 @@ fun Endpoint(
             .padding(WindowInsets.statusBars.asPaddingValues())
         )
 
-        if (characterViewModel.errorMessage.isNotEmpty()) {
+        if (endpointViewModel.errorMessage.isNotEmpty()) {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                Text(text = characterViewModel.errorMessage)
+                Text(text = endpointViewModel.errorMessage)
             }
         } else {
             LazyColumn(
@@ -70,9 +81,23 @@ fun Endpoint(
                         bottom = 0.dp
                     )
             ) {
-                characterViewModel.characterResponse.value.results.forEach { character ->
-                    item {
-                        Text(text = character.name)
+                when (endpointType) {
+                    "characters" -> {
+                        items(endpointViewModel.characterResponse.value.results) { character ->
+//                            CharacterItem(character = character)
+                            Text(text = character.name)
+                        }
+                    }
+                    "locations" -> {
+                        println(endpointViewModel.locationResponse.value)
+                        items(endpointViewModel.locationResponse.value.results) { location ->
+                            Text(text = location.name)
+                        }
+                    }
+                    "episodes" -> {
+                        items(endpointViewModel.episodeResponse.value.results) { episode ->
+                            Text(text = episode.name)
+                        }
                     }
                 }
             }
