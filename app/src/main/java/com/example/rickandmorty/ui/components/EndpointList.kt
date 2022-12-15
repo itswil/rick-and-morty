@@ -1,6 +1,5 @@
 package com.example.rickandmorty.ui.components
 
-import ImageCard
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -10,28 +9,44 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.rickandmorty.R
 
-@Composable
-fun EndpointList(navController: NavController) {
-    ImageCard(
-        image = painterResource(id = R.drawable.location_1),
-        description = "Location 1",
-        navController = navController,
+data class Endpoint(
+    val title: String,
+    val description: String,
+    val image: Int,
+    val endpointType: String
+)
+
+val endpoints = listOf(
+    Endpoint(
         title = "Characters",
+        description = "View all the characters in the Rick and Morty universe",
+        image = R.drawable.location_1,
         endpointType = "characters"
-    )
-    ImageCard(
-        image = painterResource(id = R.drawable.location_2),
-        description = "Location 2",
-        navController = navController,
+    ),
+    Endpoint(
         title = "Locations",
+        description = "View all the locations in the Rick and Morty universe",
+        image = R.drawable.location_2,
         endpointType = "locations"
-    )
-    ImageCard(
-        image = painterResource(id = R.drawable.location_3),
-        description = "Location 3",
-        navController = navController,
+    ),
+    Endpoint(
         title = "Episodes",
+        description = "View all the episodes in the Rick and Morty universe",
+        image = R.drawable.location_3,
         endpointType = "episodes"
     )
+)
+
+@Composable
+fun EndpointList(navController: NavController) {
+    endpoints.forEach { endpoint ->
+        ImageCard(
+            title = endpoint.title,
+            description = endpoint.description,
+            image = painterResource(id = endpoint.image),
+            navController = navController,
+            endpointType = endpoint.endpointType,
+        )
+    }
     Spacer(modifier = Modifier.padding(bottom = 32.dp))
 }
