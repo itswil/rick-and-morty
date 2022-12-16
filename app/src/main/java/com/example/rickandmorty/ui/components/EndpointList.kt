@@ -1,19 +1,12 @@
 package com.example.rickandmorty.ui.components
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.rickandmorty.R
 
 data class Endpoint(
-    val title: String,
-    val description: String,
-    val image: Int,
-    val endpointType: String
+    val title: String, val description: String, val image: Int, val endpointType: String
 )
 
 val endpoints = listOf(
@@ -22,14 +15,12 @@ val endpoints = listOf(
         description = "View all the characters in the Rick and Morty universe",
         image = R.drawable.location_1,
         endpointType = "characters"
-    ),
-    Endpoint(
+    ), Endpoint(
         title = "Locations",
         description = "View all the locations in the Rick and Morty universe",
         image = R.drawable.location_2,
         endpointType = "locations"
-    ),
-    Endpoint(
+    ), Endpoint(
         title = "Episodes",
         description = "View all the episodes in the Rick and Morty universe",
         image = R.drawable.location_3,
@@ -48,5 +39,4 @@ fun EndpointList(navController: NavController) {
             endpointType = endpoint.endpointType,
         )
     }
-    Spacer(modifier = Modifier.padding(bottom = 32.dp))
 }

@@ -34,7 +34,7 @@ fun ImageCard(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 0.dp)
+            .padding(bottom = 16.dp)
             .clickable {
                 navController.navigate(
                     "${Screen.EndpointScreen.route}/$endpointType"

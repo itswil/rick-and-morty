@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.rickandmorty.ui.components.EndpointCard
 import com.example.rickandmorty.viewmodel.EndpointViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,14 +76,16 @@ fun Endpoint(
                             .asPaddingValues()
                             .calculateTopPadding() + TopAppBarDefaults.windowInsets
                             .asPaddingValues()
-                            .calculateTopPadding() * 2 + 16.dp, bottom = 0.dp
-                    )
+                            .calculateTopPadding() * 2 + 16.dp,
+                        bottom = 0.dp,
+                    ), contentPadding = PaddingValues(
+                    start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp
+                )
             ) {
                 when (endpointType) {
                     "characters" -> {
                         items(endpointViewModel.characterResponse.value.results) { character ->
-//                            CharacterItem(character = character)
-                            Text(text = character.name)
+                            EndpointCard(name = character.name, imageUrl = character.image)
                         }
                     }
                     "locations" -> {

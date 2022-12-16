@@ -23,9 +23,10 @@ fun Home(navController: NavController) {
                 end = 0.dp,
                 top = WindowInsets.statusBars.asPaddingValues()
                     .calculateTopPadding() + TopAppBarDefaults.windowInsets.asPaddingValues()
-                    .calculateTopPadding() * 2  + 16.dp,
+                    .calculateTopPadding() * 2 + 16.dp,
                 bottom = 0.dp
-            )
+            ),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp)
         ) {
             item {
                 EndpointList(navController = navController)
