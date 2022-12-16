@@ -3,14 +3,9 @@ package com.example.rickandmorty.ui.layouts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -21,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.rickandmorty.viewmodel.EndpointViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Endpoint(
     navController: NavController, endpointViewModel: EndpointViewModel, endpointType: String
@@ -49,7 +45,10 @@ fun Endpoint(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
             )
-        }, backgroundColor = MaterialTheme.colorScheme.primary, navigationIcon = {
+        }, colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.background
+        ), navigationIcon = {
             IconButton(onClick = {
                 navController.popBackStack()
             }) {
@@ -59,10 +58,7 @@ fun Endpoint(
                     tint = MaterialTheme.colorScheme.background
                 )
             }
-        }, modifier = Modifier
-            .fillMaxWidth()
-            .padding(WindowInsets.statusBars.asPaddingValues())
-        )
+        })
 
         if (endpointViewModel.errorMessage.isNotEmpty()) {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
@@ -73,12 +69,13 @@ fun Endpoint(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        start = 0.dp,
-                        end = 0.dp,
+                        start = 0.dp, end = 0.dp,
+
                         top = WindowInsets.statusBars
                             .asPaddingValues()
-                            .calculateTopPadding() + 56.dp,
-                        bottom = 0.dp
+                            .calculateTopPadding() + TopAppBarDefaults.windowInsets
+                            .asPaddingValues()
+                            .calculateTopPadding() * 2 + 16.dp, bottom = 0.dp
                     )
             ) {
                 when (endpointType) {
