@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -28,13 +29,11 @@ fun EndpointItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(80.dp)
-            .padding(bottom = 16.dp)
-            .clip(shape = RoundedCornerShape(16.dp))
             .clickable {
                 println("Clicked")
             },
     ) {
-        Row {
+        Row(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
             if (imageUrl != null) {
                 AsyncImage(
                     model = imageUrl,
