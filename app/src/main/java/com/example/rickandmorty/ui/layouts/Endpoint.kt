@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.rickandmorty.ui.components.EndpointCard
+import com.example.rickandmorty.ui.components.EndpointItem
 import com.example.rickandmorty.viewmodel.EndpointViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,17 +85,27 @@ fun Endpoint(
                 when (endpointType) {
                     "characters" -> {
                         items(endpointViewModel.characterResponse.value.results) { character ->
-                            EndpointCard(name = character.name, imageUrl = character.image)
+                            EndpointItem(
+                                name = character.name,
+                                description = "${character.gender} ${character.species} at ${character.origin.name}",
+                                imageUrl = character.image
+                            )
                         }
                     }
                     "locations" -> {
                         items(endpointViewModel.locationResponse.value.results) { location ->
-                            Text(text = location.name)
+                            EndpointItem(
+                                name = location.name,
+                                description = "${location.type} in ${location.dimension}"
+                            )
                         }
                     }
                     "episodes" -> {
                         items(endpointViewModel.episodeResponse.value.results) { episode ->
-                            Text(text = episode.name)
+                            EndpointItem(
+                                name = episode.name,
+                                description = "Episode ${episode.episode} aired on ${episode.air_date}"
+                            )
                         }
                     }
                 }
