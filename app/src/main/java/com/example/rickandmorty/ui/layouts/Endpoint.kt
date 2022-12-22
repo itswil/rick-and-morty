@@ -61,17 +61,24 @@ fun Endpoint(
             }
         })
 
+        if (endpointViewModel.isLoading) {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator()
+            }
+        }
+
         if (endpointViewModel.errorMessage.isNotEmpty()) {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                 Text(text = endpointViewModel.errorMessage)
             }
-        } else {
+        }
+
+        if (!endpointViewModel.isLoading && endpointViewModel.errorMessage.isEmpty()) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
                         start = 0.dp, end = 0.dp,
-
                         top = WindowInsets.statusBars
                             .asPaddingValues()
                             .calculateTopPadding() + TopAppBarDefaults.windowInsets
