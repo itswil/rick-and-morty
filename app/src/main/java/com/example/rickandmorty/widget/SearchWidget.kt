@@ -19,20 +19,25 @@ val touchUnitSize = 44.dp
 class SearchWidget : GlanceAppWidget() {
     @Composable
     override fun Content() {
-        Row(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = GlanceModifier.fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.background)
-        ) {
-            SearchBar()
-            SpacerCustom()
-            Shortcut("1")
-            SpacerCustom()
-            Shortcut("2")
-            SpacerCustom()
-            Shortcut("3")
-        }
+        SearchWidgetContent()
+    }
+}
+
+@Composable
+fun SearchWidgetContent() {
+    Row(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = GlanceModifier.fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
+    ) {
+        SearchBar()
+        SpacerCustom()
+        Shortcut("1")
+        SpacerCustom()
+        Shortcut("2")
+        SpacerCustom()
+        Shortcut("3")
     }
 }
 
